@@ -1,0 +1,1693 @@
+{
+	"info": {
+		"_postman_id": "a9f935c6-8a8b-4aab-8d23-dbf49fea7d25",
+		"name": "Tests for statistics",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43370298",
+		"_collection_link": "https://www.postman.com/shareit-0099/workspace/ewm/collection/43370298-a9f935c6-8a8b-4aab-8d23-dbf49fea7d25?action=share&source=collection_link&creator=43370298"
+	},
+	"item": [
+		{
+			"name": "Запросы к hit с неправильными параметрами",
+			"item": [
+				{
+					"name": "Отсутствует параметр app",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"uri\": \"/docs\",\n    \"ip\": \"25.10.10.10\",\n    \"timestamp\": \"2025-07-25 12:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/hit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Некорректный параметр app",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"app\": \"  \",\n    \"uri\": \"/docs\",\n    \"ip\": \"25.10.10.10\",\n    \"timestamp\": \"2025-07-25 12:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/hit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Отсутствует параметр ip",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"app\":\"ewm\",\n    \"uri\": \"/docs\",\n    \"timestamp\": \"2025-07-25 12:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/hit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Некорректный параметр ip",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"app\":\"ewm\",\n    \"uri\": \"/docs\",\n    \"ip\": \"256.10.10.10\",\n    \"timestamp\": \"2025-07-25 12:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/hit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Отсутствует параметр uri",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"app\":\"ewm\",\n    \"ip\": \"10.10.10.10\",\n    \"timestamp\": \"2025-07-25 12:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/hit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Некорректный параметр uri (1)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"app\":\"ewm\",\n    \"uri\": \"/do cs\",\n    \"ip\": \"255.10.10.10\",\n    \"timestamp\": \"2025-07-25 12:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/hit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Некорректный параметр uri (2)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"app\":\"ewm\",\n    \"uri\": \"docs\",\n    \"ip\": \"255.10.10.10\",\n    \"timestamp\": \"2025-07-25 12:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/hit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Некорректный параметр uri (3)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"app\":\"ewm\",\n    \"uri\": \"docs/\",\n    \"ip\": \"255.10.10.10\",\n    \"timestamp\": \"2025-07-25 12:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/hit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Некорректный параметр uri (4)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"app\":\"ewm\",\n    \"uri\": \"/do^cs\",\n    \"ip\": \"255.10.10.10\",\n    \"timestamp\": \"2025-07-25 12:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/hit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Некорректный параметр uri (5)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"app\":\"ewm\",\n    \"uri\": \"/\",\n    \"ip\": \"255.10.10.10\",\n    \"timestamp\": \"2025-07-25 12:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/hit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Некорректный параметр uri (6)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"app\":\"ewm\",\n    \"uri\": \"/sdfsdf/\",\n    \"ip\": \"255.10.10.10\",\n    \"timestamp\": \"2025-07-25 12:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/hit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Некорректный параметр uri (7)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"app\":\"ewm\",\n    \"uri\": \"/sdfsdf//\",\n    \"ip\": \"255.10.10.10\",\n    \"timestamp\": \"2025-07-25 12:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/hit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hit"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 400 и поле 'error'\", function () {",
+							"    pm.response.to.be.badRequest;",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"    const body = pm.response.json(); // получаем тело ответа в формате JSON",
+							"    pm.expect(body).is.an('object'); // проверяем, что тело ответа является объектом",
+							"    pm.expect(body).to.have.property('error');",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Запросы к stats с неправильными параметрами",
+			"item": [
+				{
+					"name": "Некорректные параметры start и end",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/stats?uris=/docs&unique=true&start={{end}}&end={{start}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"stats"
+							],
+							"query": [
+								{
+									"key": "uris",
+									"value": "/docs",
+									"description": "Список uri для которых нужно выгрузить статистику"
+								},
+								{
+									"key": "unique",
+									"value": "true",
+									"description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)"
+								},
+								{
+									"key": "start",
+									"value": "{{end}}",
+									"description": "Начальная дата для выборки\n"
+								},
+								{
+									"key": "end",
+									"value": "{{start}}",
+									"description": "Конечная дата для выборки\n"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Отсутствует параметр start",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/stats?uris=/docs&unique=true&end={{end}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"stats"
+							],
+							"query": [
+								{
+									"key": "uris",
+									"value": "/docs",
+									"description": "Список uri для которых нужно выгрузить статистику"
+								},
+								{
+									"key": "unique",
+									"value": "true",
+									"description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)"
+								},
+								{
+									"key": "start",
+									"value": "{{start}}",
+									"description": "Начальная дата для выборки\n",
+									"disabled": true
+								},
+								{
+									"key": "end",
+									"value": "{{end}}",
+									"description": "Конечная дата для выборки\n"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Отсутствует параметр end",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/stats?uris=/docs&unique=true&start={{start}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"stats"
+							],
+							"query": [
+								{
+									"key": "uris",
+									"value": "/docs",
+									"description": "Список uri для которых нужно выгрузить статистику"
+								},
+								{
+									"key": "unique",
+									"value": "true",
+									"description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)"
+								},
+								{
+									"key": "start",
+									"value": "{{start}}",
+									"description": "Начальная дата для выборки\n"
+								},
+								{
+									"key": "end",
+									"value": "{{start}}",
+									"description": "Конечная дата для выборки\n",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"pm.test(\"Ответ должен содержать код статуса 400 и поле 'error'\", function () {",
+							"    pm.response.to.be.badRequest;",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"    const body = pm.response.json(); // получаем тело ответа в формате JSON",
+							"    pm.expect(body).is.an('object'); // проверяем, что тело ответа является объектом",
+							"    pm.expect(body).to.have.property('error');",
+							"});"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Корректные запросы к hit и stats",
+			"item": [
+				{
+					"name": "Добавление /docs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"app\":\"ewm\",\n    \"uri\": \"/docs\",\n    \"ip\": \"10.10.10.10\",\n    \"timestamp\": \"2025-07-25 12:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/hit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Добавление /docs (тот же ip)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"app\":\"ewm\",\n    \"uri\": \"/docs\",\n    \"ip\": \"10.10.10.10\",\n    \"timestamp\": \"2025-07-25 12:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/hit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Добавление /docs (другой ip)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"app\":\"ewm\",\n    \"uri\": \"/docs\",\n    \"ip\": \"20.10.10.10\",\n    \"timestamp\": \"2025-07-25 12:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/hit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get stats for /docs (unique=true)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+									"    pm.response.to.be.ok;    ",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Ответ должен быть массивом\", function () {",
+									"    const body = pm.response.json();",
+									"    pm.expect(body).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"Ответ должен быть массивом длины 1\", function () {",
+									"    const body = pm.response.json();",
+									"    pm.expect(body).to.have.lengthOf(1);",
+									"});",
+									"",
+									"pm.test(\"Каждый элемент массива содержит обязательные поля\", function() {",
+									"    const body = pm.response.json();",
+									"    body.forEach(item => {",
+									"        pm.expect(item).to.be.an('object');",
+									"        pm.expect(item).to.have.all.keys('uri', 'hits', 'app');",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Проверка значений первого элемента\", function() {",
+									"    const responseBody = pm.response.json();",
+									"    const firstItem = responseBody[0];",
+									"    ",
+									"    pm.expect(firstItem.app).to.eql('ewm');",
+									"    pm.expect(firstItem.hits).to.eql(2);",
+									"    pm.expect(firstItem.uri).to.eql('/docs');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/stats?uris=/docs&unique=true&start={{start}}&end={{end}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"stats"
+							],
+							"query": [
+								{
+									"key": "uris",
+									"value": "/docs",
+									"description": "Список uri для которых нужно выгрузить статистику"
+								},
+								{
+									"key": "unique",
+									"value": "true",
+									"description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)"
+								},
+								{
+									"key": "start",
+									"value": "{{start}}",
+									"description": "Начальная дата для выборки\n"
+								},
+								{
+									"key": "end",
+									"value": "{{end}}",
+									"description": "Конечная дата для выборки\n"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get stats for /docs (unique=false)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+									"    pm.response.to.be.ok;    ",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Ответ должен быть массивом\", function () {",
+									"    const body = pm.response.json();",
+									"    pm.expect(body).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"Ответ должен быть массивом длины 1\", function () {",
+									"    const body = pm.response.json();",
+									"    pm.expect(body).to.have.lengthOf(1);",
+									"});",
+									"",
+									"pm.test(\"Каждый элемент массива содержит обязательные поля\", function() {",
+									"    const body = pm.response.json();",
+									"    body.forEach(item => {",
+									"        pm.expect(item).to.be.an('object');",
+									"        pm.expect(item).to.have.all.keys('uri', 'hits', 'app');",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Проверка значений первого элемента\", function() {",
+									"    const responseBody = pm.response.json();",
+									"    const firstItem = responseBody[0];",
+									"    ",
+									"    pm.expect(firstItem.app).to.eql('ewm');",
+									"    pm.expect(firstItem.hits).to.eql(3);",
+									"    pm.expect(firstItem.uri).to.eql('/docs');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/stats?uris=/docs&unique=false&start={{start}}&end={{end}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"stats"
+							],
+							"query": [
+								{
+									"key": "uris",
+									"value": "/docs",
+									"description": "Список uri для которых нужно выгрузить статистику"
+								},
+								{
+									"key": "unique",
+									"value": "false",
+									"description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)"
+								},
+								{
+									"key": "start",
+									"value": "{{start}}",
+									"description": "Начальная дата для выборки\n"
+								},
+								{
+									"key": "end",
+									"value": "{{end}}",
+									"description": "Конечная дата для выборки\n"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Добавление /images",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"app\":\"ewm\",\n    \"uri\": \"/images\",\n    \"ip\": \"10.10.10.10\",\n    \"timestamp\": \"2025-07-25 12:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/hit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Добавление /images (2000г)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"app\":\"ewm\",\n    \"uri\": \"/images\",\n    \"ip\": \"10.10.10.10\",\n    \"timestamp\": \"2000-01-01 12:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/hit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Статистика по /images (с 2020г)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+									"    pm.response.to.be.ok;    ",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Ответ должен быть массивом\", function () {",
+									"    const body = pm.response.json();",
+									"    pm.expect(body).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"Ответ должен быть массивом длины 1\", function () {",
+									"    const body = pm.response.json();",
+									"    pm.expect(body).to.have.lengthOf(1);",
+									"});",
+									"",
+									"pm.test(\"Каждый элемент массива содержит обязательные поля\", function() {",
+									"    const body = pm.response.json();",
+									"    body.forEach(item => {",
+									"        pm.expect(item).to.be.an('object');",
+									"        pm.expect(item).to.have.all.keys('uri', 'hits', 'app');",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Проверка значений первого элемента\", function() {",
+									"    const responseBody = pm.response.json();",
+									"    const firstItem = responseBody[0];",
+									"    ",
+									"    pm.expect(firstItem.app).to.eql('ewm');",
+									"    pm.expect(firstItem.hits).to.eql(1);",
+									"    pm.expect(firstItem.uri).to.eql('/images');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/stats?uris=/images&unique=false&start={{start}}&end={{end}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"stats"
+							],
+							"query": [
+								{
+									"key": "uris",
+									"value": "/images",
+									"description": "Список uri для которых нужно выгрузить статистику"
+								},
+								{
+									"key": "unique",
+									"value": "false",
+									"description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)"
+								},
+								{
+									"key": "start",
+									"value": "{{start}}",
+									"description": "Начальная дата для выборки\n"
+								},
+								{
+									"key": "end",
+									"value": "{{end}}",
+									"description": "Конечная дата для выборки\n"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Статистика по /images (с 1999г)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+									"    pm.response.to.be.ok;    ",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Ответ должен быть массивом\", function () {",
+									"    const body = pm.response.json();",
+									"    pm.expect(body).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"Ответ должен быть массивом длины 1\", function () {",
+									"    const body = pm.response.json();",
+									"    pm.expect(body).to.have.lengthOf(1);",
+									"});",
+									"",
+									"pm.test(\"Каждый элемент массива содержит обязательные поля\", function() {",
+									"    const body = pm.response.json();",
+									"    body.forEach(item => {",
+									"        pm.expect(item).to.be.an('object');",
+									"        pm.expect(item).to.have.all.keys('uri', 'hits', 'app');",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Проверка значений первого элемента\", function() {",
+									"    const responseBody = pm.response.json();",
+									"    const firstItem = responseBody[0];",
+									"    ",
+									"    pm.expect(firstItem.app).to.eql('ewm');",
+									"    pm.expect(firstItem.hits).to.eql(2);",
+									"    pm.expect(firstItem.uri).to.eql('/images');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/stats?uris=/images&unique=false&start=1999-05-05 00:00:00&end={{end}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"stats"
+							],
+							"query": [
+								{
+									"key": "uris",
+									"value": "/images",
+									"description": "Список uri для которых нужно выгрузить статистику"
+								},
+								{
+									"key": "unique",
+									"value": "false",
+									"description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)"
+								},
+								{
+									"key": "start",
+									"value": "1999-05-05 00:00:00",
+									"description": "Начальная дата для выборки\n"
+								},
+								{
+									"key": "end",
+									"value": "{{end}}",
+									"description": "Конечная дата для выборки\n"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Статистика по /docs и /images",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+									"    pm.response.to.be.ok;    ",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Ответ должен быть массивом\", function () {",
+									"    const body = pm.response.json();",
+									"    pm.expect(body).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"Ответ должен быть массивом длины 2\", function () {",
+									"    const body = pm.response.json();",
+									"    pm.expect(body).to.have.lengthOf(2);",
+									"});",
+									"",
+									"pm.test(\"Каждый элемент массива содержит обязательные поля\", function() {",
+									"    const body = pm.response.json();",
+									"    body.forEach(item => {",
+									"        pm.expect(item).to.be.an('object');",
+									"        pm.expect(item).to.have.all.keys('uri', 'hits', 'app');",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Проверка сортировки по убыванию значения hit\", function() {",
+									"    const responseBody = pm.response.json();",
+									"    const firstItem = responseBody[0];",
+									"    const secondItem = responseBody[1];",
+									"    pm.expect(firstItem.hits).to.greaterThanOrEqual(secondItem.hits);",
+									"});",
+									"",
+									"pm.test(\"Проверка значений первого элемента\", function() {",
+									"    const responseBody = pm.response.json();",
+									"    const firstItem = responseBody[0];",
+									"    ",
+									"    pm.expect(firstItem.app).to.eql('ewm');",
+									"    pm.expect(firstItem.hits).to.eql(3);",
+									"    pm.expect(firstItem.uri).to.eql('/docs');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/stats?uris=/docs,/images&unique=false&start={{start}}&end={{end}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"stats"
+							],
+							"query": [
+								{
+									"key": "uris",
+									"value": "/docs,/images",
+									"description": "Список uri для которых нужно выгрузить статистику"
+								},
+								{
+									"key": "unique",
+									"value": "false",
+									"description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)"
+								},
+								{
+									"key": "start",
+									"value": "{{start}}",
+									"description": "Начальная дата для выборки\n"
+								},
+								{
+									"key": "end",
+									"value": "{{end}}",
+									"description": "Конечная дата для выборки\n"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Статистика по /images/2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+									"    pm.response.to.be.ok;    ",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Ответ должен быть массивом\", function () {",
+									"    const body = pm.response.json();",
+									"    pm.expect(body).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+									"    pm.response.to.be.ok;    ",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Ответ быть пустым массивом\", function () {",
+									"    const body = pm.response.json();",
+									"    pm.expect(body).to.be.an('array');",
+									"    pm.expect(body).to.be.empty;",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/stats?uris=/images/2&start={{start}}&end={{end}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"stats"
+							],
+							"query": [
+								{
+									"key": "uris",
+									"value": "/images/2",
+									"description": "Список uri для которых нужно выгрузить статистику"
+								},
+								{
+									"key": "unique",
+									"value": "false",
+									"description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)",
+									"disabled": true
+								},
+								{
+									"key": "start",
+									"value": "{{start}}",
+									"description": "Начальная дата для выборки\n"
+								},
+								{
+									"key": "end",
+									"value": "{{end}}",
+									"description": "Конечная дата для выборки\n"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Добавление /images/2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"app\":\"ewm\",\n    \"uri\": \"/images/2\",\n    \"ip\": \"10.10.10.10\",\n    \"timestamp\": \"2025-07-25 12:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/hit",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"hit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Статистика по /images/2 (после добавления)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+									"    pm.response.to.be.ok;    ",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Ответ должен быть массивом\", function () {",
+									"    const body = pm.response.json();",
+									"    pm.expect(body).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"Ответ должен быть массивом длины 1\", function () {",
+									"    const body = pm.response.json();",
+									"    pm.expect(body).to.have.lengthOf(1);",
+									"});",
+									"",
+									"pm.test(\"Каждый элемент массива содержит обязательные поля\", function() {",
+									"    const body = pm.response.json();",
+									"    body.forEach(item => {",
+									"        pm.expect(item).to.be.an('object');",
+									"        pm.expect(item).to.have.all.keys('uri', 'hits', 'app');",
+									"    });",
+									"});",
+									"",
+									"pm.test(\"Проверка значений первого элемента\", function() {",
+									"    const responseBody = pm.response.json();",
+									"    const firstItem = responseBody[0];",
+									"    ",
+									"    pm.expect(firstItem.app).to.eql('ewm');",
+									"    pm.expect(firstItem.hits).to.eql(1);",
+									"    pm.expect(firstItem.uri).to.eql('/images/2');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/stats?uris=/images/2&unique=false&start={{start}}&end={{end}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"stats"
+							],
+							"query": [
+								{
+									"key": "uris",
+									"value": "/images/2",
+									"description": "Список uri для которых нужно выгрузить статистику"
+								},
+								{
+									"key": "unique",
+									"value": "false",
+									"description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)"
+								},
+								{
+									"key": "start",
+									"value": "{{start}}",
+									"description": "Начальная дата для выборки\n"
+								},
+								{
+									"key": "end",
+									"value": "{{end}}",
+									"description": "Конечная дата для выборки\n"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Статистика без параметра uris",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+									"    pm.response.to.be.ok;    ",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"Ответ должен быть массивом\", function () {",
+									"    const body = pm.response.json();",
+									"    pm.expect(body).to.be.an('array');",
+									"});",
+									"",
+									"pm.test(\"Ответ должен быть непустым массивом\", function () {",
+									"    const body = pm.response.json();",
+									"    pm.expect(body).to.not.be.empty;",
+									"});",
+									"",
+									"pm.test(\"Ответ должен быть массивом длины 3\", function () {",
+									"    const body = pm.response.json();",
+									"    pm.expect(body).to.have.lengthOf(3);",
+									"});",
+									"",
+									"pm.test(\"Проверка сортировки по убыванию значения hit\", function() {",
+									"    const responseBody = pm.response.json();",
+									"    const firstItem = responseBody[0];",
+									"    const secondItem = responseBody[1];",
+									"    pm.expect(firstItem.hits).to.greaterThan(secondItem.hits);",
+									"    ",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/stats?unique=true&start={{start}}&end={{end}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"stats"
+							],
+							"query": [
+								{
+									"key": "uris",
+									"value": "/docs",
+									"description": "Список uri для которых нужно выгрузить статистику",
+									"disabled": true
+								},
+								{
+									"key": "unique",
+									"value": "true",
+									"description": "Нужно ли учитывать только уникальные посещения (только с уникальным ip)"
+								},
+								{
+									"key": "start",
+									"value": "{{start}}",
+									"description": "Начальная дата для выборки\n"
+								},
+								{
+									"key": "end",
+									"value": "{{end}}",
+									"description": "Конечная дата для выборки\n"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"pm.test(\"Статус должен быть 200 или 201\", function() {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});"
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "localhost:9090",
+			"type": "string"
+		},
+		{
+			"key": "start",
+			"value": "2020-05-05 00:00:00",
+			"type": "string"
+		},
+		{
+			"key": "end",
+			"value": "2040-05-05 00:00:00",
+			"type": "string"
+		}
+	]
+}

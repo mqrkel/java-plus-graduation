@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ewm-service
+  sql:
+    init:
+      mode: always
+  datasource:
+    url: jdbc:h2:mem:ewm
+    driver-class-name: org.h2.Driver
+    username: ewm
+    password: ewm
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+
+logging:
+  level:
+    ru.practicum.ewm: DEBUG
