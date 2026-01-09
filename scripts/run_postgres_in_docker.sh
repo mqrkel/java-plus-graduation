@@ -1,2 +1,0 @@
-docker run -d --name postgres-ewm-stats-db -p 5432:5432 -v postgres:/var/lib/postgres -e POSTGRES_DB=statsdb -e POSTGRES_PASSWORD=123456 -e POSTGRES_USER=dbuser postgres 
-docker run -d --name postgres-ewm-main-db  -p 5434:5432 -v postgres:/var/lib/postgres -e POSTGRES_DB=ewmdb   -e POSTGRES_PASSWORD=123456 -e POSTGRES_USER=dbuser postgres 

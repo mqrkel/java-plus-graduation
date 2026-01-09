@@ -1,11 +1,12 @@
+name:
+  EWM
 services:
-  
 
   stats-db:
     image: postgres:16.1
     container_name: postgres-ewm-stats-db
     ports:
-      - "5432:5432"
+      - "65432:5432"
     environment:
       - POSTGRES_DB=statsdb
       - POSTGRES_USER=dbuser
@@ -17,24 +18,26 @@ services:
       retries: 10
 
 
-  stats-server:
-    ports:
-      - "9090:9090"
-    build: stats-server
-    image: stats-server
-    container_name: stats-server
-    depends_on:
-      - stats-db
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/statsdb
-      - SPRING_DATASOURCE_USERNAME=dbuser
-      - SPRING_DATASOURCE_PASSWORD=123456
+#  stats-server:
+#    build:
+#      context: .
+#      dockerfile: stats/stats-server/Dockerfile
+#    image: stats-server
+#    container_name: stats-server
+#    ports:
+#      - "9090:9090"
+#    depends_on:
+#      - stats-db
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/statsdb
+#      - SPRING_DATASOURCE_USERNAME=dbuser
+#      - SPRING_DATASOURCE_PASSWORD=123456
 
   ewm-db:
     image: postgres:16.1
     container_name: postgres-ewm-main-db
     ports:
-      - "5434:5432"
+      - "65434:5432"
     environment:
       - POSTGRES_DB=ewmdb
       - POSTGRES_USER=dbuser
@@ -45,17 +48,18 @@ services:
       interval: 5s
       retries: 10
 
-  ewm-service:
-    ports:
-      - "8080:8080"
-    build: ewm-service
-    image: ewm-service
-    container_name: ewm-service
-    depends_on:
-      - stats-server
-      - ewm-db
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/ewmdb
-      - SPRING_DATASOURCE_USERNAME=dbuser
-      - SPRING_DATASOURCE_PASSWORD=123456
-      - STATSSERVER_URL=http://stats-server:9090
+#  main-service:
+#    ports:
+#      - "8888:8080"
+#    build:
+#      context: ./core/main-service
+#    image: ewm-service
+#    container_name: main-service
+#    depends_on:
+#      - stats-server
+#      - ewm-db
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/ewmdb
+#      - SPRING_DATASOURCE_USERNAME=dbuser
+#      - SPRING_DATASOURCE_PASSWORD=123456
+#      - STATSSERVER_URL=http://stats-server:9090
