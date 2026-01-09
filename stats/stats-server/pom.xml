@@ -10,7 +10,7 @@
     <artifactId>stats-server</artifactId>
     <packaging>jar</packaging>
 
-    <name>stats-service</name>
+    <name>stats-server</name>
     <url>http://maven.apache.org</url>
 
     <properties>

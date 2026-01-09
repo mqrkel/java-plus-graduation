@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: category-service
+  config:
+    import: "optional:configserver:http://localhost:8888"
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO
+    org.springframework.cloud.gateway.handler.RoutePredicateHandlerMapping: INFO
+    org.springframework.cloud.gateway.handler.FilteringWebHandler: INFO
+    io.netty.resolver.dns.DnsServerAddressStreamProviders: WARN
