@@ -67,7 +67,9 @@ public class EventServiceImpl implements EventService {
             return eventRepository.save(e);
         });
 
-        assert event != null;
+        if (event == null) {
+            throw new IllegalStateException("Failed to save event");
+        }
         LocationDto location = loadLocation(event.getLocationId());
         if (location == null && eventDto.getLocation() != null) {
             LocationDto fallback = new LocationDto();
