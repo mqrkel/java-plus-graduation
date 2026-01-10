@@ -1,6 +1,5 @@
 package ru.practicum.ewm.category.service;
 
-import java.util.Collection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +10,8 @@ import ru.practicum.ewm.category.model.Category;
 import ru.practicum.ewm.category.repository.CategoryRepository;
 import ru.practicum.ewm.client.EventClient;
 import ru.practicum.ewm.exception.NotFoundException;
+
+import java.util.Collection;
 
 @Service
 @RequiredArgsConstructor
@@ -54,6 +55,7 @@ public class CategoryServiceImpl implements CategoryService {
         return CategoryMapper.toDto(saved);
     }
 
+    @Transactional
     @Override
     public void delete(Long id) {
         // 1. Быстрая проверка существования (короткая операция, без общей @Transactional)

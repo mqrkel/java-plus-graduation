@@ -15,7 +15,7 @@ import ru.practicum.ewm.dto.EventShortDtoOut;
 @UtilityClass
 public class CompilationMapper {
 
-    public Compilation toEntity(NewCompilationDto dto) {
+    public static Compilation toEntity(NewCompilationDto dto) {
         Set<Long> eventIds = dto.getEvents() != null
                 ? new HashSet<>(dto.getEvents())
                 : new HashSet<>();
@@ -27,7 +27,7 @@ public class CompilationMapper {
                 .build();
     }
 
-    public CompilationDto toDto(
+    public static CompilationDto toDto(
             Compilation compilation,
             Map<Long, EventShortDtoOut> eventsById
     ) {

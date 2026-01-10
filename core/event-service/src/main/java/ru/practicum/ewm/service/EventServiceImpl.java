@@ -1,35 +1,17 @@
 package ru.practicum.ewm.service;
 
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 import ru.practicum.ewm.client.CategoryClient;
 import ru.practicum.ewm.client.LocationClient;
 import ru.practicum.ewm.client.RequestClient;
 import ru.practicum.ewm.client.UserClient;
-import ru.practicum.ewm.dto.CategoryDtoOut;
-import ru.practicum.ewm.dto.EventCreateDto;
-import ru.practicum.ewm.dto.EventDtoOut;
-import ru.practicum.ewm.dto.EventShortDtoOut;
-import ru.practicum.ewm.dto.EventUpdateAdminDto;
-import ru.practicum.ewm.dto.EventUpdateDto;
-import ru.practicum.ewm.dto.LocationAutoRequest;
-import ru.practicum.ewm.dto.LocationDto;
-import ru.practicum.ewm.dto.LocationFullDtoOut;
-import ru.practicum.ewm.dto.LocationState;
-import ru.practicum.ewm.dto.RequestsCountDto;
-import ru.practicum.ewm.dto.UserDtoOut;
+import ru.practicum.ewm.dto.*;
 import ru.practicum.ewm.exception.ConditionNotMetException;
 import ru.practicum.ewm.exception.NoAccessException;
 import ru.practicum.ewm.exception.NotFoundException;
@@ -42,6 +24,11 @@ import ru.practicum.ewm.repository.EventRepository;
 import ru.practicum.statsclient.StatsClient;
 import ru.practicum.statsclient.StatsClientException;
 import ru.practicum.statsdto.StatsDtoOut;
+
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static ru.practicum.ewm.constants.Constants.STATS_EVENTS_URL;
 
@@ -125,6 +112,7 @@ public class EventServiceImpl implements EventService {
                 || full.getState() == LocationState.AUTO_GENERATED;
     }
 
+    @Transactional
     @Override
     public EventDtoOut update(Long userId, Long eventId, EventUpdateDto eventDto) {
 
