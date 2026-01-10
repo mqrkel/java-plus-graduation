@@ -22,6 +22,9 @@ management:
       exposure:
         include: health,info
   endpoint:
+    gateway:
+      enabled: true
+      access: unrestricted
     health:
       show-details: never
 

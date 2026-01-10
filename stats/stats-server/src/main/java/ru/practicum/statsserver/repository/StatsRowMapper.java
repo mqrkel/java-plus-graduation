@@ -1,12 +1,11 @@
 package ru.practicum.statsserver.repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import ru.practicum.statsserver.model.Stats;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 @Component
 @RequiredArgsConstructor

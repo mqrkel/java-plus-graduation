@@ -17,22 +17,6 @@ services:
       interval: 5s
       retries: 10
 
-
-#  stats-server:
-#    build:
-#      context: .
-#      dockerfile: stats/stats-server/Dockerfile
-#    image: stats-server
-#    container_name: stats-server
-#    ports:
-#      - "9090:9090"
-#    depends_on:
-#      - stats-db
-#    environment:
-#      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/statsdb
-#      - SPRING_DATASOURCE_USERNAME=dbuser
-#      - SPRING_DATASOURCE_PASSWORD=123456
-
   ewm-db:
     image: postgres:16.1
     container_name: postgres-ewm-main-db
@@ -48,18 +32,78 @@ services:
       interval: 5s
       retries: 10
 
-#  main-service:
-#    ports:
-#      - "8888:8080"
-#    build:
-#      context: ./core/main-service
-#    image: ewm-service
-#    container_name: main-service
-#    depends_on:
-#      - stats-server
-#      - ewm-db
-#    environment:
-#      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/ewmdb
-#      - SPRING_DATASOURCE_USERNAME=dbuser
-#      - SPRING_DATASOURCE_PASSWORD=123456
-#      - STATSSERVER_URL=http://stats-server:9090
+  stats-server:
+    build:
+      context: .
+      dockerfile: stats/stats-server/Dockerfile
+    image: stats-server
+    container_name: stats-server
+    ports:
+      - "9090:9090"
+    depends_on:
+      - stats-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:65432/statsdb
+      - SPRING_DATASOURCE_USERNAME=dbuser
+      - SPRING_DATASOURCE_PASSWORD=123456
+
+  user-service:
+    build:
+      context: ./core/user-service
+    image: user-service
+    container_name: user-service
+    depends_on:
+      - ewm-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:65434/ewmdb
+      - SPRING_DATASOURCE_USERNAME=dbuser
+      - SPRING_DATASOURCE_PASSWORD=123456
+
+  request-service:
+    build:
+      context: ./core/request-service
+    image: request-service
+    container_name: request-service
+    depends_on:
+      - ewm-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:65434/ewmdb
+      - SPRING_DATASOURCE_USERNAME=dbuser
+      - SPRING_DATASOURCE_PASSWORD=123456
+
+  location-service:
+    build:
+      context: ./core/location-service
+    image: location-service
+    container_name: location-service
+    depends_on:
+      - ewm-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:65434/ewmdb
+      - SPRING_DATASOURCE_USERNAME=dbuser
+      - SPRING_DATASOURCE_PASSWORD=123456
+
+  event-service:
+    build:
+      context: ./core/event-service
+    image: event-service
+    container_name: event-service
+    depends_on:
+      - ewm-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:65434/ewmdb
+      - SPRING_DATASOURCE_USERNAME=dbuser
+      - SPRING_DATASOURCE_PASSWORD=123456
+
+  category-service:
+    build:
+      context: ./core/category-service
+    image: category-service
+    container_name: category-service
+    depends_on:
+      - stats-server
+      - ewm-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:65434/ewmdb
+      - SPRING_DATASOURCE_USERNAME=dbuser
+      - SPRING_DATASOURCE_PASSWORD=123456

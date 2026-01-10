@@ -1,5 +1,8 @@
 package ru.practicum.statsserver.service;
 
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.statsdto.HitDto;
@@ -8,10 +11,6 @@ import ru.practicum.statsserver.exception.ParameterInvalidException;
 import ru.practicum.statsserver.mappers.HitMapper;
 import ru.practicum.statsserver.mappers.StatsMapper;
 import ru.practicum.statsserver.repository.HitRepository;
-
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
