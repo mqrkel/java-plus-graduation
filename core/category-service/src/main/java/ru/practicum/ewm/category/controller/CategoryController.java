@@ -63,4 +63,17 @@ public class CategoryController {
         log.debug("delete category id:{} by admin", id);
         categoryService.delete(id);
     }
+
+    @GetMapping("/admin/categories")
+    public Collection<CategoryDtoOut> getAdminCategories(
+            @RequestParam(name = "from", defaultValue = "0") @Min(0) Integer offset,
+            @RequestParam(name = "size", defaultValue = "10") @Min(1) Integer limit
+    ) {
+        return categoryService.getAll(offset, limit);
+    }
+
+    @GetMapping("/admin/categories/{id}")
+    public CategoryDtoOut getAdminCategory(@PathVariable @Min(1) Long id) {
+        return categoryService.get(id);
+    }
 }

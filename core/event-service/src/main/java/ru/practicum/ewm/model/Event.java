@@ -88,5 +88,5 @@ public class Event {
 
     @Transient
     @Builder.Default
-    Integer views = 0;
+    Double rating = 0.0;
 }
