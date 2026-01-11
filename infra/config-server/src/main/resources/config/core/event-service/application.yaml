@@ -1,41 +1,51 @@
-# statsserver.url: http://stats-server:9090 # если запускаем в контейнере
-#statsserver.url: http://localhost:9090   # если запускаем на хосте
-
 server:
   port: 0
 
-spring:
-  application:
-    name: event-service
+grpc:
+  server:
+    enabled: false
+    port: 0
+  client:
+    analyzer:
+      address: 'discovery:///analyzer'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+    collector:
+      address: 'discovery:///collector'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
 
+spring:
   output:
     ansi:
       enabled: always
-
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
   jpa:
     hibernate:
       ddl-auto: none
     properties:
       hibernate:
         format_sql: true
-    show-sql: true
-
-  sql:
-    init:
-      mode: always
-
+        show_sql: true
   datasource:
     driver-class-name: org.postgresql.Driver
-    # url: jdbc:postgresql://postgres-ewm-main-db:5432/ewmdb # Вариант 1: Использовать имя контейнера и внутренний порт (если запускаем в контейнере)
-    url: jdbc:postgresql://localhost:65434/ewmdb # Вариант 2: Использовать localhost и внешний порт (если запускаем на хосте)
-    username: dbuser
-    password: 123456
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
+    url: jdbc:postgresql://localhost:6541/event
+    username: event
+    password: event
 
 logging:
   level:
-    ru.practicum.ewm: DEBUG
+    root: WARN
+    org.springframework.cloud.loadbalancer: WARN
+    com.netflix.discovery: WARN
+    springframework.cloud.openfeign: WARN
+    feign: WARN
+    request.service.controller: WARN
+    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: WARN
+    org.springframework.web.servlet.DispatcherServlet: WARN
+    event.service: WARN

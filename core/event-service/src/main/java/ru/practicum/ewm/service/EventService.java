@@ -1,6 +1,7 @@
 package ru.practicum.ewm.service;
 
 import java.util.Collection;
+import java.util.List;
 import ru.practicum.ewm.dto.EventCreateDto;
 import ru.practicum.ewm.dto.EventDtoOut;
 import ru.practicum.ewm.dto.EventShortDtoOut;
@@ -24,6 +25,8 @@ public interface EventService {
     Collection<EventShortDtoOut> findShortEventsBy(EventFilter filter);
 
     Collection<EventDtoOut> findFullEventsBy(EventAdminFilter filter);
+
+    List<EventDtoOut> getRecommendation(Long userId, Long max);
 
     Collection<EventShortDtoOut> findByInitiator(Long userId, Integer offset, Integer limit);
 }

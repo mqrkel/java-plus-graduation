@@ -32,6 +32,5 @@ public class EventShortDtoOut {
     Boolean paid;
     Integer confirmedRequests;
 
-    @Builder.Default
-    Integer views = 0;
+    Double rating;
 }

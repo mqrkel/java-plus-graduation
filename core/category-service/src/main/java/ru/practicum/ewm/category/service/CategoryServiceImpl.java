@@ -58,17 +58,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     @Override
     public void delete(Long id) {
-        // 1. Быстрая проверка существования (короткая операция, без общей @Transactional)
         if (!categoryRepository.existsById(id)) {
             throw new NotFoundException("Category", id);
         }
 
-        // 2. Внешний вызов — строго вне транзакции сервиса
         if (Boolean.TRUE.equals(eventClient.existsByCategoryId(id))) {
             throw new IllegalStateException("Cannot delete category. There are events associated with it.");
         }
 
-        // 3. Удаление: deleteById у Spring Data JPA сам оборачивается в транзакцию
         categoryRepository.deleteById(id);
     }
 }

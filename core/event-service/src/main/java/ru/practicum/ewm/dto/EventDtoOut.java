@@ -1,6 +1,7 @@
 package ru.practicum.ewm.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -22,30 +23,34 @@ import static ru.practicum.ewm.constants.Constants.DATE_TIME_FORMAT;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class EventDtoOut {
-
     Long id;
-    String title;
     String annotation;
-    String description;
-    CategoryDtoOut category;
-    UserDtoOut initiator;
-    LocationDto location;
 
-    @JsonFormat(pattern = DATE_TIME_FORMAT)
-    LocalDateTime eventDate;
+    @JsonProperty("category")
+    CategoryDtoOut categoryDto;
+
+    Long confirmedRequests;
 
     @JsonFormat(pattern = DATE_TIME_FORMAT)
     LocalDateTime createdOn;
 
+    String description;
+
     @JsonFormat(pattern = DATE_TIME_FORMAT)
-    LocalDateTime publishedOn;
+    LocalDateTime eventDate;
+
+    Long initiator;
+
+    @JsonProperty("location")
+    LocationDto locationDto;
 
     Boolean paid;
-    Integer participantLimit;
+    Long participantLimit;
+
+    @JsonFormat(pattern = DATE_TIME_FORMAT)
+    LocalDateTime publishedOn;
     Boolean requestModeration;
     EventState state;
-    Integer confirmedRequests;
-
-    @Builder.Default
-    Integer views = 0;
+    String title;
+    Double rating;
 }

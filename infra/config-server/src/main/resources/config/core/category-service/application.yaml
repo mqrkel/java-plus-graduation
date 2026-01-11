@@ -26,10 +26,10 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    # url: jdbc:postgresql://postgres-ewm-main-db:5432/ewmdb # Вариант 1: Использовать имя контейнера и внутренний порт (если запускаем в контейнере)
-    url: jdbc:postgresql://localhost:65434/ewmdb # Вариант 2: Использовать localhost и внешний порт (если запускаем на хосте)
-    username: dbuser
-    password: 123456
+    # url: jdbc:postgresql://postgres-ewm-main-db:5432/category_db # Вариант 1: Использовать имя контейнера и внутренний порт (если запускаем в контейнере)
+    url: jdbc:postgresql://localhost:6541/category_db # Вариант 2: Использовать localhost и внешний порт (если запускаем на хосте)
+    username: category_db
+    password: category_db
 
 eureka:
   client:
