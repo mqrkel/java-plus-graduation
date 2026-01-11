@@ -1,109 +1,161 @@
-name:
-  EWM
 services:
 
-  stats-db:
-    image: postgres:16.1
-    container_name: postgres-ewm-stats-db
+  # ===================== KAFKA =====================
+  kafka:
+    image: confluentinc/confluent-local:7.4.3
+    hostname: kafka
+    container_name: graduation-kafka
     ports:
-      - "65432:5432"
+      - "9092:9092"
     environment:
-      - POSTGRES_DB=statsdb
-      - POSTGRES_USER=dbuser
-      - POSTGRES_PASSWORD=123456
+      KAFKA_NODE_ID: 1
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:29093
+      KAFKA_LISTENERS: PLAINTEXT://kafka:29092,CONTROLLER://kafka:29093,PLAINTEXT_HOST://0.0.0.0:9092
+      CLUSTER_ID: K0EA9p0yEe6MkAAAAkKsEg
     healthcheck:
-      test: pg_isready -q -d $$POSTGRES_DB -u $$POSTGRES_USER
+      test: ["CMD", "bash", "-c", "kafka-topics --bootstrap-server kafka:29092 --list"]
+      interval: 10s
       timeout: 5s
-      interval: 5s
-      retries: 10
+      retries: 5
 
-  ewm-db:
-    image: postgres:16.1
-    container_name: postgres-ewm-main-db
-    ports:
-      - "65434:5432"
-    environment:
-      - POSTGRES_DB=ewmdb
-      - POSTGRES_USER=dbuser
-      - POSTGRES_PASSWORD=123456
-    healthcheck:
-      test: pg_isready -q -d $$POSTGRES_DB -u $$POSTGRES_USER
-      timeout: 5s
-      interval: 5s
-      retries: 10
-
-  stats-server:
-    build:
-      context: .
-      dockerfile: stats/stats-server/Dockerfile
-    image: stats-server
-    container_name: stats-server
-    ports:
-      - "9090:9090"
+  kafka-init-topics:
+    image: confluentinc/confluent-local:7.4.3
     depends_on:
-      - stats-db
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:65432/statsdb
-      - SPRING_DATASOURCE_USERNAME=dbuser
-      - SPRING_DATASOURCE_PASSWORD=123456
+      kafka:
+        condition: service_healthy
+    command: >
+      bash -c "
+      kafka-topics --create --if-not-exists --bootstrap-server kafka:29092
+        --topic stats.user-actions.v1 --partitions 1 --replication-factor 1 &&
+      kafka-topics --create --if-not-exists --bootstrap-server kafka:29092
+        --topic stats.events-similarity.v1 --partitions 1 --replication-factor 1
+      "
 
+  # ===================== POSTGRES =====================
+  postgres:
+    image: postgres:16.1
+    container_name: graduation-postgres
+    ports:
+      - "6541:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ./init-databases.sql:/docker-entrypoint-initdb.d/01-init-databases.sql:ro
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ===================== EUREKA =====================
+  discovery-server:
+    build: ./infra/discovery-server
+    ports:
+      - "8761:8761"
+    environment:
+      EUREKA_CLIENT_REGISTER-WITH-EUREKA: "false"
+      EUREKA_CLIENT_FETCH-REGISTRY: "false"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761"]
+      interval: 10s
+      retries: 5
+
+  # ===================== CONFIG =====================
+  config-server:
+    build: ./infra/config-server
+    depends_on:
+      discovery-server:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: native
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka
+
+  # ===================== CORE SERVICES =====================
   user-service:
-    build:
-      context: ./core/user-service
-    image: user-service
-    container_name: user-service
+    build: ./core/user-service
     depends_on:
-      - ewm-db
+      postgres:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
+      config-server:
+        condition: service_started
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:65434/ewmdb
-      - SPRING_DATASOURCE_USERNAME=dbuser
-      - SPRING_DATASOURCE_PASSWORD=123456
-
-  request-service:
-    build:
-      context: ./core/request-service
-    image: request-service
-    container_name: request-service
-    depends_on:
-      - ewm-db
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:65434/ewmdb
-      - SPRING_DATASOURCE_USERNAME=dbuser
-      - SPRING_DATASOURCE_PASSWORD=123456
-
-  location-service:
-    build:
-      context: ./core/location-service
-    image: location-service
-    container_name: location-service
-    depends_on:
-      - ewm-db
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:65434/ewmdb
-      - SPRING_DATASOURCE_USERNAME=dbuser
-      - SPRING_DATASOURCE_PASSWORD=123456
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/user_db
+      SPRING_DATASOURCE_USERNAME: user_db
+      SPRING_DATASOURCE_PASSWORD: user_db
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka
 
   event-service:
-    build:
-      context: ./core/event-service
-    image: event-service
-    container_name: event-service
+    build: ./core/event-service
     depends_on:
-      - ewm-db
+      postgres:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
+      config-server:
+        condition: service_started
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:65434/ewmdb
-      - SPRING_DATASOURCE_USERNAME=dbuser
-      - SPRING_DATASOURCE_PASSWORD=123456
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/event
+      SPRING_DATASOURCE_USERNAME: event
+      SPRING_DATASOURCE_PASSWORD: event
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka
 
-  category-service:
-    build:
-      context: ./core/category-service
-    image: category-service
-    container_name: category-service
+  request-service:
+    build: ./core/request-service
     depends_on:
-      - stats-server
-      - ewm-db
+      postgres:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
+      config-server:
+        condition: service_started
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:65434/ewmdb
-      - SPRING_DATASOURCE_USERNAME=dbuser
-      - SPRING_DATASOURCE_PASSWORD=123456
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/request_db
+      SPRING_DATASOURCE_USERNAME: request_db
+      SPRING_DATASOURCE_PASSWORD: request_db
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka
+
+  # ===================== STATS PIPELINE =====================
+  collector:
+    build: ./stats/collector
+    depends_on:
+      kafka:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka
+
+  aggregator:
+    build: ./stats/aggregator
+    depends_on:
+      kafka:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka
+
+  analyzer:
+    build: ./stats/analyzer
+    depends_on:
+      kafka:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
+      config-server:
+        condition: service_started
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:29092
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-server:8761/eureka
