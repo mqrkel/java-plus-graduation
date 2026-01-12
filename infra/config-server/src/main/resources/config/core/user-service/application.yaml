@@ -12,12 +12,12 @@ spring:
     password: user_db
   sql:
     init:
-      mode: never
+      mode: always
   jpa:
     show-sql: true
     defer-datasource-initialization: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
