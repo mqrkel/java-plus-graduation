@@ -1,5 +1,6 @@
 package ru.practicum.ewm.category.controller;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import java.util.Collection;
 import lombok.RequiredArgsConstructor;
@@ -44,14 +45,14 @@ public class CategoryController {
 
     @PostMapping("/admin/categories")
     @ResponseStatus(HttpStatus.CREATED)
-    public CategoryDtoOut createCategory(@Validated @RequestBody CategoryDto categoryDto) {
+    public CategoryDtoOut createCategory(@Valid @RequestBody CategoryDto categoryDto) {
         log.debug("Create category '{}' by admin", categoryDto.getName());
         return categoryService.add(categoryDto);
     }
 
     @PatchMapping("/admin/categories/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CategoryDtoOut updateCategory(@Validated @RequestBody CategoryDto categoryDto,
+    public CategoryDtoOut updateCategory(@Valid @RequestBody CategoryDto categoryDto,
                                          @PathVariable Long id) {
         log.debug("Update category id:{} by admin", id);
         return categoryService.update(id, categoryDto);
@@ -62,5 +63,18 @@ public class CategoryController {
     public void deleteCategory(@PathVariable Long id) {
         log.debug("delete category id:{} by admin", id);
         categoryService.delete(id);
+    }
+
+    @GetMapping("/admin/categories")
+    public Collection<CategoryDtoOut> getAdminCategories(
+            @RequestParam(name = "from", defaultValue = "0") @Min(0) Integer offset,
+            @RequestParam(name = "size", defaultValue = "10") @Min(1) Integer limit
+    ) {
+        return categoryService.getAll(offset, limit);
+    }
+
+    @GetMapping("/admin/categories/{id}")
+    public CategoryDtoOut getAdminCategory(@PathVariable @Min(1) Long id) {
+        return categoryService.get(id);
     }
 }
