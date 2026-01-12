@@ -1,14 +1,5 @@
 package ru.practicum.ewm.service;
 
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -20,18 +11,7 @@ import ru.practicum.ewm.client.CategoryClient;
 import ru.practicum.ewm.client.LocationClient;
 import ru.practicum.ewm.client.RequestClient;
 import ru.practicum.ewm.client.UserClient;
-import ru.practicum.ewm.dto.CategoryDtoOut;
-import ru.practicum.ewm.dto.EventCreateDto;
-import ru.practicum.ewm.dto.EventDtoOut;
-import ru.practicum.ewm.dto.EventShortDtoOut;
-import ru.practicum.ewm.dto.EventUpdateAdminDto;
-import ru.practicum.ewm.dto.EventUpdateDto;
-import ru.practicum.ewm.dto.LocationAutoRequest;
-import ru.practicum.ewm.dto.LocationDto;
-import ru.practicum.ewm.dto.LocationFullDtoOut;
-import ru.practicum.ewm.dto.LocationState;
-import ru.practicum.ewm.dto.RequestsCountDto;
-import ru.practicum.ewm.dto.UserDtoOut;
+import ru.practicum.ewm.dto.*;
 import ru.practicum.ewm.exception.ConditionNotMetException;
 import ru.practicum.ewm.exception.NoAccessException;
 import ru.practicum.ewm.exception.NotFoundException;
@@ -43,6 +23,11 @@ import ru.practicum.ewm.model.EventState;
 import ru.practicum.ewm.repository.EventRepository;
 import ru.practicum.grpc.ewm.dashboard.message.RecommendedEventProto;
 import ru.practicum.statsclient.AnalyzerClient;
+
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -61,6 +46,7 @@ public class EventServiceImpl implements EventService {
     private final TransactionTemplate transactionTemplate;
     private final EventMapper eventMapper;
 
+    @Transactional
     @Override
     public EventDtoOut add(Long userId, EventCreateDto eventDto) {
         validateEventDate(eventDto.getEventDate(), EventState.PENDING);
@@ -92,6 +78,8 @@ public class EventServiceImpl implements EventService {
 
         event.setConfirmedRequests(0);
         event.setRating(0.0);
+
+        eventRepository.save(event);
 
         return eventMapper.toDto(event, category, initiator, location);
     }
@@ -147,6 +135,8 @@ public class EventServiceImpl implements EventService {
         enrichWithConfirmedRequestsCount(List.of(updated));
         enrichWithRating(List.of(updated));
 
+        eventRepository.save(updated);
+
         UserDtoOut initiator = getUserOrThrow(updated.getInitiatorId());
         LocationDto location = loadLocation(updated.getLocationId());
         CategoryDtoOut category = newCategory != null ? newCategory : getCategoryOrThrow(updated.getCategoryId());
@@ -197,6 +187,8 @@ public class EventServiceImpl implements EventService {
 
         enrichWithConfirmedRequestsCount(List.of(updated));
         enrichWithRating(List.of(updated));
+
+        eventRepository.save(updated);
 
         UserDtoOut initiator = getUserOrThrow(updated.getInitiatorId());
         LocationDto location = loadLocation(updated.getLocationId());
